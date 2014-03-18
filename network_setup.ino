@@ -1,4 +1,3 @@
-
 void setup() {
   Serial.begin(9600);
 
@@ -6,6 +5,10 @@ void setup() {
   system("ifconfig eht0 up > /dev/ttyGS0");
 
   system("ifconfig eth0 192.168.0.18 eth0");
+  system("route add default gw 192.168.0.1");
+  
+  // SSHアクセス出来たら、/etc/resolv.confも設定
+  // nameserver 192.168.0.1
   
   //system("cat /etc/issue > /dev/ttyGS0");
   //system("/etc/init.d/sshd stop > /dev/ttyGS0");
