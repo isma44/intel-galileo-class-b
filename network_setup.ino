@@ -6,7 +6,7 @@ void setup() {
   system("ifconfig eth0 down > /dev/ttyGS0");
   system("ifconfig eht0 up > /dev/ttyGS0");
 
-  system("ifconfig eth0 192.168.0.18 eth0");
+  system("ifconfig eth0 192.168.0.IP設定 eth0");
   system("route add default gw 192.168.0.1");
   
   // SSHアクセス出来たら、/etc/resolv.confも設定
