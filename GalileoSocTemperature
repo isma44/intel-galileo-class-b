@@ -1,0 +1,26 @@
+/*
+For Galileo.
+This example shows how to read the temperature of the Quark SoC 
+*/
+
+char temp_raw[6]; int temp;
+void setup() { 
+  Serial.begin(115200);
+}
+
+void loop() {
+  temp = getQuarkTemp();
+  Serial.print("The temperature of the Quark SoC is "); 
+  Serial.print(temp);
+  Serial.println(" degrees celcius.");
+  delay(1000); 
+}
+
+int getQuarkTemp(){ 
+  FILE *fp;
+  fp = fopen("/sys/class/thermal/thermal_zone0/temp", "r"); 
+  fgets(temp_raw, 5, fp);
+  fclose(fp);
+  int temp = atoi(temp_raw); temp /= 100;
+  return temp;
+}
