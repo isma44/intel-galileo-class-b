@@ -1,7 +1,7 @@
-var io = require('socket.io-client');
 
-var portMain = 8080;
-var nsMain = 'pg';
+var syncHost = '{YourDefinition.com}',
+    portMain = 8080,
+    nsMain = 'pg';
 
 var $circle,
     playerId, browserName,
@@ -14,6 +14,8 @@ var $circle,
     socket;
 
                                                                                               
+var io = require('socket.io-client');
+
 var _getXY = function(/* MouseEvent */ e) {                                               
     var touches = e.originalEvent && e.originalEvent.touches ? e.originalEvent.touches : [],
         x = nBallRadius, y = nBallRadius;                                                   
@@ -70,7 +72,7 @@ function drawNetworkOrServerProblem()
                                                                              
 function prepareConnectedAndDisconnectedEvent()                              
 {                                                                            
-    socket = io.connect('http://hp2hp.net:'+portMain+'/'+nsMain);            
+    socket = io.connect('http://'+syncHost+':'+portMain+'/'+nsMain);            
     // socket = io.connect('http://'+location.hostname+':'+portMain+'/'+nsMain);
                                                                                 
     socket.on('response', function( data )                                      
