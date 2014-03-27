@@ -1,4 +1,3 @@
-
 var nDistMoved = 0;
 
 var io = require('socket.io-client');
@@ -131,87 +130,29 @@ function prepareConnectedAndDisconnectedEvent()
 // _____________ coordinate related ______________
 
 
-/*****
-var _touchSupport = ("ontouchstart" in window);
-console.log( 'touch support : '+ _touchSupport );
-var events = {
-    move : _touchSupport ? 'touchmove' : 'mousemove',
-    start: _touchSupport ? 'touchstart': 'mousedown',
-    end  : _touchSupport ? 'touchend'  : 'mouseup'
-};
-******/
+prepareConnectedAndDisconnectedEvent();
 
 
+var _getXY = function(/* MouseEvent */ e) {
+    var touches = e.originalEvent && e.originalEvent.touches ? e.originalEvent.touches : [],
+        x = nBallRadius, y = nBallRadius;
 
-
-    // var newColor = '#'+(0x1000000+(Math.random())*0xffffff).toString(16).substr(1,6);
-    // $('.circle').css("background-color", newColor);
-    // $circle = $('.circle').show();
-    
-    // $("#distance").text('X, Yの差分 (複数の移動差分中、最終のみ)');
-    // console.log('X, Yの差分 (複数の移動差分中、最終のみ)');
-
-
-    
-    prepareConnectedAndDisconnectedEvent();
-
-
-
-    
-    /********
-    $(window)
-        .on(events.start, function(e){
-            e.preventDefault();
-
-            var xy = _getXY(e);
-
-            if ( $circle.css('display') === 'none' ) {
-                $circle.show();
-            }
-            $circle.css({top: xy.y, left: xy.x});
-            
-            $(this).on(events.move, _onMove);
-        })
-        .on(events.end, function(e){
-            e.preventDefault();
-
-            var xy = _getXY(e);
-
-            $circle.css({top: xy.y, left: xy.x});
-    
-            $(this).off(events.move, _onMove);
-        });
-        
-
-    var _onMove = function(e){
-        e.preventDefault();
-
-        var xy = _getXY(e);
-        
-        socket.emit('move', {x: xy.x, y: xy.y });
-    };
-    *********/
-    
-    var _getXY = function(/* MouseEvent */ e) {
-        var touches = e.originalEvent && e.originalEvent.touches ? e.originalEvent.touches : [],
-            x = nBallRadius, y = nBallRadius;
-
-        if ( _touchSupport && 0 < touches.length ) {
-            x = touches[0].pageX;
-            y = touches[0].pageY;
-        }
-        else {
-            x = e.pageX;
-            y = e.pageY;
-        }
-
-        if ( x < 0 ) { x = nFixX; } 
-        if ( y < 0 ) { y = nFixY; } 
-        if ( x > xMax ) { x = xMax + nFixX; } 
-        if ( y > yMax ) { y = yMax + nFixY; } 
-
-        return { x: x, y: y };
+    if ( _touchSupport && 0 < touches.length ) {
+        x = touches[0].pageX;
+        y = touches[0].pageY;
     }
+    else {
+        x = e.pageX;
+        y = e.pageY;
+    }
+
+    if ( x < 0 ) { x = nFixX; } 
+    if ( y < 0 ) { y = nFixY; } 
+    if ( x > xMax ) { x = xMax + nFixX; } 
+    if ( y > yMax ) { y = yMax + nFixY; } 
+
+    return { x: x, y: y };
+}
 
 
 
